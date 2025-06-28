@@ -1,5 +1,9 @@
+<!-- 
+https://www.markdownguide.org/basic-syntax/
+https://github.com/orgs/community/discussions/16925
+-->
 <h1 align="center">
-  SELECT ... FOR UPDATE
+  :blue_book: SELECT ... FOR UPDATE
 </h1>
 
 In Oracle, the SELECT ... FOR UPDATE statement is used to lock rows returned by a query to prevent other transactions from modifying or deleting them until the current transaction is completed (committed or rolled back). This is particularly useful in scenarios where you need to ensure data consistency during concurrent access.
