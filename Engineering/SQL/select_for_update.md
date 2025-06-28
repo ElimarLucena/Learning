@@ -41,7 +41,7 @@ FROM employees
 WHERE department = 'HR'
 FOR UPDATE NOWAIT;
 ```
-> [!NOTE] 
+> [!WARNING]
 > If the rows are locked, an error is raised immediately.
 
 **SKIP LOCKED** Option: Add SKIP LOCKED to skip rows that are already locked:
