@@ -1,5 +1,7 @@
+using Application.services;
 
-namespace Application.services
+namespace Application.workers
+
 {
     public class ProcessingPaymentWorker : BackgroundService
     {

@@ -1,4 +1,5 @@
 using Application.services;
+using Application.workers;
 
 var builder = WebApplication.CreateBuilder(args);
 
