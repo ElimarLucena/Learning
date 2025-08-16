@@ -2,6 +2,6 @@ namespace Application.services
 {
     public interface IProcessingPaymentService
     {
-        public Task ProcessingPayment();
+        public Task ProcessingPayment(long account);
     }
 }

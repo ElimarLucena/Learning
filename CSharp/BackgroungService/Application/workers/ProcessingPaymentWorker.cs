@@ -1,7 +1,6 @@
 using Application.services;
 
 namespace Application.workers
-
 {
     public class ProcessingPaymentWorker : BackgroundService
     {
@@ -12,22 +11,37 @@ namespace Application.workers
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            try
             {
-                try
+                while (!stoppingToken.IsCancellationRequested)
                 {
                     using var scope = _serviceProvider.CreateScope();
-                    IProcessingPaymentService? processingPaymentService = scope.ServiceProvider.GetRequiredService<IProcessingPaymentService>();
+                    IProcessingPaymentService? processingPaymentService =
+                        scope.ServiceProvider.GetRequiredService<IProcessingPaymentService>();
 
-                    await processingPaymentService.ProcessingPayment();
-                    await Task.Delay(1000, stoppingToken);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Exception: {ex.Message}");
-                    throw;
+                    if (HostedServiceQueue.QueueAccount.TryDequeue(out long result))
+                        await processingPaymentService.ProcessingPayment(result);
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("ProcessingPaymentWorker running!");
+
+                    await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken);
                 }
             }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine($"Exception: {ex.Message}");
+                throw;
+            }
+        }
+
+        public override async Task StopAsync(CancellationToken stoppingToken)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("ProcessingPaymentWorker stopping!");
+
+            await base.StopAsync(stoppingToken);
         }
     }
 }
