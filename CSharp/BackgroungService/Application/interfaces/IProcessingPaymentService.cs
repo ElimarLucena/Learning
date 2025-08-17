@@ -1,4 +1,4 @@
-namespace Application.services
+namespace Application.interfaces
 {
     public interface IProcessingPaymentService
     {

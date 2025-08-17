@@ -1,3 +1,4 @@
+using Application.interfaces;
 using Application.request;
 using Application.services;
 using Application.workers;
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // services.
 builder.Services.AddScoped<IProcessingPaymentService, ProcessingPaymentService>();
+builder.Services.AddScoped<ISendPaymentNotificationMail, SendPaymentNotificationMail>();
 
 // background services: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-9.0&tabs=net-cli
 builder.Services.AddHostedService<ProcessingPaymentWorker>();

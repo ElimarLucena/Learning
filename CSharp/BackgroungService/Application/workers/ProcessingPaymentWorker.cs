@@ -1,4 +1,4 @@
-using Application.services;
+using Application.interfaces;
 
 namespace Application.workers
 {
@@ -22,8 +22,8 @@ namespace Application.workers
                     if (HostedServiceQueue.QueueAccount.TryDequeue(out long result))
                         await processingPaymentService.ProcessingPayment(result);
 
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("ProcessingPaymentWorker running!");
+                    // Console.ForegroundColor = ConsoleColor.Yellow;
+                    // Console.WriteLine("ProcessingPaymentWorker running!");
 
                     await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken);
                 }
@@ -38,8 +38,8 @@ namespace Application.workers
 
         public override async Task StopAsync(CancellationToken stoppingToken)
         {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("ProcessingPaymentWorker stopping!");
+            // Console.ForegroundColor = ConsoleColor.Magenta;
+            // Console.WriteLine("ProcessingPaymentWorker stopping!");
 
             await base.StopAsync(stoppingToken);
         }
